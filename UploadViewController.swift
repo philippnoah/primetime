@@ -40,6 +40,7 @@ class UploadViewController: UIViewController, ImagePickerDelegate, MKMapViewDele
 
         // Do any additional setup after loading the view.
         
+        // Ask for Authorisation from the User.
         self.locationManager.requestAlwaysAuthorization()
         
         // For use in foreground

@@ -64,12 +64,16 @@ class CustomEventTableViewCell: UITableViewCell {
         if event.desc == "" {
             self.notes.text = "No Description"
         } else {
-            self.notes.text = "Info : \(event.desc)"
+            self.notes.text = "Info: \(event.desc)"
         }
         if event.tags == "" {
             self.tags.text = "No Tags"
         } else {
-            self.tags.text = event.tags
+            var listOfTags = event.tags.componentsSeparatedByString(" ")
+            self.tags.text = ""
+            for (var i = 0; i < listOfTags.count; i = i + 1) {
+                self.tags.text = self.tags.text! + " #\(listOfTags[i])"
+            }
         }
     }
 
