@@ -49,17 +49,17 @@ class CustomEventTableViewCell: UITableViewCell {
         if event.startTime == "" {
             self.startTime.text = "No Time"
         } else {
-            self.startTime.text = event.startTime
+            self.startTime.text = "From: \(event.startTime)"
         }
         if event.endTime == "" {
             self.endTime.text = "No Time"
         } else {
-            self.endTime.text = event.startTime
+            self.endTime.text = "To: \(event.startTime)"
         }
         if event.location == "" {
             self.location.text = "No Address"
         } else {
-            self.location.text = "\(event.location)"
+            self.location.text = "Address: \(event.location)"
         }
         if event.desc == "" {
             self.notes.text = "No Description"

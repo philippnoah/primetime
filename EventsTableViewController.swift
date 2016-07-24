@@ -27,7 +27,10 @@ class EventsTableViewController: UITableViewController, CLLocationManagerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        super.viewDidLoad()
+        tableView.layoutMargins = UIEdgeInsetsZero
+        tableView.separatorInset = UIEdgeInsetsZero
+        
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationItem.setHidesBackButton(true, animated:true);
         UINavigationBar.appearance().barTintColor = UIColor(red: 140/255, green: 196/255, blue: 76/255, alpha: 1.0)
         let navigationHeight = navigationController?.navigationBar.frame.maxY ?? 0.0
@@ -214,6 +217,8 @@ class EventsTableViewController: UITableViewController, CLLocationManagerDelegat
         
         let currentCell = tableView.cellForRowAtIndexPath(indexPath)! as! CustomEventTableViewCell
         
+        currentCell.layoutMargins = UIEdgeInsetsZero
+        
         let event = events[indexPath.row]
         let vc = storyboard!.instantiateViewControllerWithIdentifier("EventDetail") as UIViewController
         let idStringInfo: String = currentCell.idString!
@@ -224,7 +229,9 @@ class EventsTableViewController: UITableViewController, CLLocationManagerDelegat
         (vc as! DetailEventViewController).assignIdString(idStringInfo)
         //(vc as! DetailTakeCameraViewController).assignNewCoor(latitudeInfo, longitude: longitudeInfo)
         
-        self.navigationController?.pushViewController(vc, animated: true)
+        performSegueWithIdentifier("toDetailView", sender: nil)
+        
+        //self.navigationController?.pushViewController(vc, animated: true)
         //let DestViewController = segue.destinationViewController as! DetailTakeCameraViewController
         
         //DestViewController.assignTitle(titleInfo)

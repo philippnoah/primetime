@@ -37,6 +37,8 @@ class UploadViewController: UIViewController, ImagePickerDelegate, MKMapViewDele
         super.viewDidLoad()
         
         self.mapView.delegate = self
+        
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
 
         // Do any additional setup after loading the view.
         
@@ -51,10 +53,19 @@ class UploadViewController: UIViewController, ImagePickerDelegate, MKMapViewDele
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         }
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UploadViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UploadViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UploadViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     // MARK: - Location Delegate Methods
     
+    @IBAction func cancelButtonPressed(sender: UIBarButtonItem) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
         
@@ -266,6 +277,13 @@ class UploadViewController: UIViewController, ImagePickerDelegate, MKMapViewDele
             })
             
         })
+        
+        let alertController = UIAlertController(title: "Successful Upload", message:
+            "Your item is now on the public field!", preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default,handler: { action in
+            self.navigationController?.popViewControllerAnimated(true)
+            return
+        }))
     }
     
     func getPlaceCity(latitude: Double, longitude: Double, completion: (answer: String?) -> Void) {
@@ -286,6 +304,35 @@ class UploadViewController: UIViewController, ImagePickerDelegate, MKMapViewDele
             }
         })
         
+    }
+
+    func keyboardWillShow(notification: NSNotification) {
+        
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            if view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+            else {
+                
+            }
+        }
+        
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            if view.frame.origin.y != 0 {
+                self.view.frame.origin.y += keyboardSize.height
+            }
+            else {
+                
+            }
+        }
+    }
+    
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
     }
 
     /*

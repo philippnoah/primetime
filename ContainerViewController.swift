@@ -1,5 +1,5 @@
 //
-//  DetailEventViewController.swift
+//  ContainerViewController.swift
 //  PrimeTime
 //
 //  Created by Sudikoff Lab iMac on 7/24/16.
@@ -8,22 +8,12 @@
 
 import UIKit
 
-class DetailEventViewController: UIViewController {
+class ContainerViewController: UIViewController {
 
-    @IBOutlet weak var scrollView: UIScrollView!
-    var newIdString: String!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        scrollView.contentSize.height = 1000
 
         // Do any additional setup after loading the view.
-    }
-    
-    // Helper function to get the title to print out
-    func assignIdString(idString: String) {
-        newIdString = idString
     }
 
     override func didReceiveMemoryWarning() {

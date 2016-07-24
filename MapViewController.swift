@@ -27,14 +27,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
         locationManager.requestWhenInUseAuthorization()
         //observer for location
         viewMap.addObserver(self, forKeyPath: "myLocation", options: NSKeyValueObservingOptions.New, context: nil)
-        
-        /*let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2DMake(37.77, -122.41)
-        marker.title = "San Francisco"
-        marker.snippet = "California"
-        marker.map = self.viewMap
-        viewMap.delegate = self*/
-        
+
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.requestAlwaysAuthorization()
@@ -126,12 +119,12 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
     //moves the camera and zooms in to the pin when the pin is tapped
     func mapView(mapView: GMSMapView, didTapMarker marker: GMSMarker) -> Bool {
         viewMap.camera = GMSCameraPosition.cameraWithTarget(marker.position, zoom: 17.0)
-        return true
+        return false
     }
     //performs segue when the info above the pin is tapped
     func mapView(mapView: GMSMapView, didTapInfoWindowOfMarker marker: GMSMarker) {
-//        print("info tapped")
-//        performSegueWithIdentifier("infoSegue", sender: self)
+        print("info tapped")
+        performSegueWithIdentifier("fromMapToDetail", sender: nil)
     }
     
     override func didReceiveMemoryWarning() {
